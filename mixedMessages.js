@@ -22,7 +22,7 @@ const simpleSubjectsPeople = ['Person', 'Child', 'Teacher', 'Doctor', 'Nurse', '
 const simpleSubjectsPlaces = ['House', 'Trailer', 'School', 'Hospital', 'Park', 'Store', 'Café', 'Library', 'Pool', 'Grotto', 'Cave', 'Basement', 'Bedroom', 'Shelter', 'Convent', 'Temple', 'Sinkhole'];
 
 // Again... from the Googs.. but I think I'll need to replace many of these words... but I'm lazy and need to write the script. More to come.
-const simpleSubjectsThings = ['Table', 'Chair', 'Book', 'Pen', 'Pencil', 'Paper', 'Computer', 'Phone', 'Automobile', 'Aeroplane', 'Locomotive', 'Boat and/or Ship', 'Tree', 'Flower', 'Brick', 'Sky', 'Ocean', 'Sun', 'Moon', 'Star', 'Cloud', 'River', 'Mountain'];
+const simpleSubjectsThings = ['Table', 'Chair', 'Book', 'Pen', 'Pencil', 'Paper', 'Computer', 'Phone', 'Automobile', 'Aeroplane', 'Locomotive', 'Boat', 'Tree', 'Flower', 'Brick', 'Sky', 'Ocean', 'Sun', 'Moon', 'Star', 'Cloud', 'River', 'Mountain'];
 
 // Everyone loves an Abstract. Hopefully my comedy formula works with these
 const simpleSubjectsAbstracts = ['Time', 'Day', 'Week', 'Month', 'Year', 'Decade', 'Hope', 'Love', 'Happiness', 'Sadness', 'Anger', 'Fear', 'Joy', 'Dispair', 'Peace', 'Knowledge', 'Truth', 'Depth', 'Beauty', 'Freedom', 'Justice', 'Power', 'Strength', 'Weakness', 'Change', 'Nothing', 'Everything'];
@@ -35,9 +35,10 @@ const verbs = ['is', 'has', 'does', 'says', 'gets', 'makes', 'goes', 'knows', 't
 // Lets add some frequency adverbs
 const adverbFrequent = ['always', 'usually', 'often', 'rarely', 'never', 'frequently', 'occasionally', 'very', 'sometimes'];
 
-// Lets add some intensity adverbs
-const adverbIntense = ['very', 'just', 'really', 'almost', 'quite', 'extremely', 'kinda', 'sort of'];
+// Lets add some intensity adverbs - Removed option, but kept array for future builds.
+//const adverbIntense = ['very', 'just', 'really', 'almost', 'quite', 'extremely', 'kinda', 'sort of'];
 
+//Manner adverbs add some spice
 const adverbManner = ['well', 'slowly', 'quickly', 'carefully', 'loudly', 'recklessly', 'quietly', 'joyfully']
 
 // Punctuation is key, However, I ain't getting fancy
@@ -76,7 +77,7 @@ function subjectPicker(){
 
 /*------------------- Constructor Functions ------------------*/
 
-// Using basic simple-sentence structure, we use some random number generators for Subjects, verbs, and whether we need an object or not (then the object)
+// Using basic simple-sentence structure, we use some random number generators for Subjects, verbs, and object - We also add in optional adverbs
 //returns a string
 function generateSimple(){
     //Create an empty array to contain the sentence
@@ -84,40 +85,60 @@ function generateSimple(){
 
     // Simple sentences begin with a subject - Select a random subject type
     let selectedSubjectArr = subjectPicker();
-    // Select a random word from the selected subject array and push it to the sentence array (make it pural)
+    
+    // Bool decides if the first word is plural
+    if (randBool()){
+        sentenceArray.push(`${selectedSubjectArr[randSelector(selectedSubjectArr.length)]}s`);
 
-
-    sentenceArray.push(`${selectedSubjectArr[randSelector(selectedSubjectArr.length)]}s`);
-
-    // Random select whether we place adverbs
-    if(randBool()){
-        // First is frequency adverb
-        let adverb = adverbFrequent[randSelector(adverbFrequent.length)];
-        sentenceArray.push(adverb);
+    // Random select whether we place a frequency adverb
+        if(randBool()){
+            let adverb = adverbFrequent[randSelector(adverbFrequent.length)];
+            sentenceArray.push(adverb);
+        }
+        //Follow that up with a verb
+        sentenceArray.push(verbsplur[randSelector(verbsplur.length)]);
     }
-    //Follow that up with a verb
-    sentenceArray.push(verbs[randSelector(verbs.length)].toLowerCase());
+    else{
+        sentenceArray.push(selectedSubjectArr[randSelector(selectedSubjectArr.length)]);
+
+    // Random select whether we place a frequency adverb
+        if(randBool()){
+            let adverb = adverbFrequent[randSelector(adverbFrequent.length)];
+            sentenceArray.push(adverb);
+        }
+        // Follow that up with a verb
+        sentenceArray.push(verbs[randSelector(verbs.length)]);
+    }
+
+    
 
     //Add an object (from the subject list) Randomize the plural
     if(randBool()){
-        //Plural    
+        // Plural    
         selectedSubjectArr = subjectPicker();
         sentenceArray.push(`${selectedSubjectArr[randSelector(selectedSubjectArr.length)].toLowerCase()}s`);
-    }
-    else{
-        //singular
-        selectedSubjectArr = subjectPicker();
-        sentenceArray.push(selectedSubjectArr[randSelector(selectedSubjectArr.length)].toLowerCase());
-        //with potential for a Manner adverb
+        // with potential for a Manner adverb
         if(randBool()){
             let adverb = adverbManner[randSelector(adverbManner.length)];
-            sentenceArray.push(`, ${adverb.toLowerCase()}`);
+            sentenceArray.push(adverb);
+        }
+    }
+    else{
+        // singular
+        selectedSubjectArr = subjectPicker();
+        sentenceArray.push(selectedSubjectArr[randSelector(selectedSubjectArr.length)].toLowerCase());
+        // with potential for a Manner adverb
+        if(randBool()){
+            let adverb = adverbManner[randSelector(adverbManner.length)];
+            sentenceArray.push(adverb);
         }
     }
 
-    console.log(sentenceArray);
+    // finally, add some punctuation
 
+    return sentenceArray.join(' ')  + punctuation[randSelector(punctuation.length)];
 
 }
 
-generateSimple();
+//log it!
+console.log(generateSimple());
