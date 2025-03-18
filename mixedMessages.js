@@ -27,8 +27,10 @@ const simpleSubjectsThings = ['Table', 'Chair', 'Book', 'Pen', 'Pencil', 'Paper'
 // Everyone loves an Abstract. Hopefully my comedy formula works with these
 const simpleSubjectsAbstracts = ['Time', 'Day', 'Week', 'Month', 'Year', 'Decade', 'Hope', 'Love', 'Happiness', 'Sadness', 'Anger', 'Fear', 'Joy', 'Dispair', 'Peace', 'Knowledge', 'Truth', 'Depth', 'Beauty', 'Freedom', 'Justice', 'Power', 'Strength', 'Weakness', 'Change', 'Nothing', 'Everything'];
 
-// The 20 most common English verbs according to Babbel... Given that I generalized all the subjecs, these should suffice without tense
-const verbs = ['are', 'have', 'do', 'say', 'get', 'make', 'go', 'know', 'take', 'come', 'see', 'think', 'look', 'want', 'give', 'use', 'find', 'tell', 'ask', 'work', 'suck'];
+// The 20 most common English verbs according to Babbel... Given that I generalized all the subjecs, Plural
+const verbsplur = ['are', 'have', 'do', 'say', 'get', 'make', 'go', 'know', 'take', 'come', 'see', 'think', 'look', 'want', 'give', 'use', 'find', 'tell', 'ask', 'work', 'suck'];
+//Same verbs - Singular
+const verbs = ['is', 'has', 'does', 'says', 'gets', 'makes', 'goes', 'knows', 'takes', 'comes', 'sees', 'thinks', 'looks', 'wants', 'uses', 'finds', 'tells', 'asks', 'works', 'sucks'];
 
 // Lets add some frequency adverbs
 const adverbFrequent = ['always', 'usually', 'often', 'rarely', 'never', 'frequently', 'occasionally', 'very', 'sometimes'];
@@ -84,7 +86,7 @@ function generateSimple(){
     let selectedSubjectArr = subjectPicker();
     // Select a random word from the selected subject array and push it to the sentence array (make it pural)
 
-    
+
     sentenceArray.push(`${selectedSubjectArr[randSelector(selectedSubjectArr.length)]}s`);
 
     // Random select whether we place adverbs
